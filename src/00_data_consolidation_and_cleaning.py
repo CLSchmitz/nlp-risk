@@ -30,7 +30,7 @@ def clean(t):
     t = remove_between_brackets(t)
     t = ''.join([c for c in t if c  in string.ascii_letters + ' '])
     t = t.lower().split()
-    t = [ps.stem(c) for c in t if c not in stop]
+    t = ' '.join([ps.stem(c) for c in t if c not in stop])
 
     return t
 
