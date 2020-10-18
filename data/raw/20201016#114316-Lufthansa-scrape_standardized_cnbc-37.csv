@@ -1,0 +1,14 @@
+﻿company_name|source_name|scraping_datetime|article_url|article_datetime|article_title|article_text
+Lufthansa|scrape_standardized_cnbc|2020-10-16 14:29:45|https://www.cnbc.com/2013/10/31/ecb-shouldnt-intervene-to-weaken-euro-lufthansa-ceo.html?&qsearchterm=Lufthansa|Published Thu, Oct 31 20138:35 AM EDT|ECB mustn’t intervene to weaken euro: Lufthansa CEO|"
+ .embedPlayer_container iframe{width:100%}
+ @media screen and (max-width: 640px){
+ .embedPlayer_container iframe {
+          height: -webkit-calc(100vw * 9/16);
+          height: -moz-calc(100vw * 9/16);
+          height: calc(100vw * 9/16);
+           }
+}
+ 
+ 
+ 
+"
