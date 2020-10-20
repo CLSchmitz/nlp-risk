@@ -8,7 +8,12 @@ import spacy
 from spacy.util import minibatch, compounding
 import en_core_web_md
 
+### This script provides the core of the project, training a SpaCy Text Categorizer.
+
 def load_data(split=0.8):
+    '''
+    Helper function that returns the loaded data in train and dev sets, in the format required by spaCy
+    '''
 
     df = pd.read_csv('../data/processed_labeled/df_final.csv', sep = '|')
 
@@ -23,6 +28,10 @@ def load_data(split=0.8):
     return (texts[:split], cats[:split]), (texts[split:], cats[split:])
 
 def evaluate(tokenizer, textcat, texts, cats):
+    '''
+    Helper function that calculates precision, recall, and F1-Score for a given Spacy Text Categorizer and a given set of test texts and categories
+    '''
+
     docs = (tokenizer(text) for text in texts)
     tp = 0.0  # True positives
     fp = 1e-8  # False positives
@@ -85,27 +94,32 @@ with nlp.disable_pipes(*other_pipes):  # Disable those pipes
     # Up to ten epochs of training
     for i in range(10):
         losses = {}
+
         # Batch up the examples using spaCy's minibatch
         random.shuffle(train_data)
         batches = minibatch(train_data, size=batch_sizes)
+
+        # Go through the batches
         for batch in batches:
             texts, annotations = zip(*batch)
-            nlp.update(texts, annotations, sgd=optimizer, drop=0.2, losses=losses)
+            nlp.update(texts, annotations, sgd=optimizer, drop=0.2, losses=losses) # Gradient descent step (the core of the training)
+
         with textcat.model.use_params(optimizer.averages):
             # Evaluate on the dev data split off in load_data()
             scores = evaluate(nlp.tokenizer, textcat, dev_texts, dev_cats)
         print(
-            "{0:.3f}\t{1:.3f}\t{2:.3f}\t{3:.3f}".format(  # Print a simple table
+            "{0:.3f}\t{1:.3f}\t{2:.3f}\t{3:.3f}".format(  # Print a simple table of scores
                 losses["textcat"],
                 scores["textcat_p"],
                 scores["textcat_r"],
                 scores["textcat_f"],
             )
         )
-        if scores['textcat_f'] >= 0.8: 
+        if scores['textcat_f'] >= 0.8: # Terminate if score is adequate (hand-picked threshold given data quality), to prevent overfitting
             print('Reached validation F1-Score of over 0.8 in ' + str(i+1) + ' epochs. Stopping.')
             break
 
+# Save model
 print('Saving Model...')
 with nlp.use_params(optimizer.averages):
     nlp.to_disk('../models/spacy_text_classifier')
