@@ -28,12 +28,21 @@ ps = PorterStemmer()
 def clean(t):
 
     t = remove_between_brackets(t)
-    t = ''.join([c for c in t if c  in string.ascii_letters + ' '])
-    t = t.lower().split()
-    t = ' '.join([ps.stem(c) for c in t if c not in stop])
+    t = ''.join([c for c in t if c in string.ascii_letters + ' .'])
+    t = t.lower()
 
     return t
 
+def stem(t):
+
+    t = remove_between_brackets(t)
+    t = ''.join([c for c in t if c in string.ascii_letters + ' '])
+    t = t.lower().split()
+    t = [c for c in t if c not in stop]
+    t = ' '.join([ps.stem(c) for c in t if c not in stop])
+
+    return t
+   
 def remove_between_brackets(dirty):
 
   clean = ""
@@ -51,5 +60,6 @@ def remove_between_brackets(dirty):
   return clean
 
 df['article_text_clean'] = df['article_text'].apply(lambda x: clean(x))
+df['article_text_stemmed'] = df['article_text'].apply(lambda x: stem(x))
 
 df.to_csv(path + '/processed/data_clean.csv', sep = '|')

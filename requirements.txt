@@ -96,3 +96,4 @@ Werkzeug==1.0.1
 win-inet-pton==1.1.0
 wincertstore==0.2
 wrapt==1.10.11
+xlrd==1.2.0
