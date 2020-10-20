@@ -8,7 +8,7 @@ The scripts in src are numbered in order of execution. As detailed below, it is 
 
 The inputs, process, and output of each script are outlined below.
 
-![repo structure](https://github.com/CLSchmitz/nlp-risk/repo_structure.PNG)
+![repo structure](https://github.com/CLSchmitz/nlp-risk/blob/master/repo_structure.PNG)
 
 ## Instructions for replicating the project locally
 
