@@ -8,6 +8,8 @@ The scripts in src are numbered in order of execution. As detailed below, it is 
 
 The inputs, process, and output of each script are outlined below.
 
+![repo structure](https://github.com/CLSchmitz/nlp-risk/repo_structure.PNG)
+
 ## Instructions for replicating the project locally
 
 A list of required packages that are used in the project is provided. In order to install them, it is recommended to use [Anaconda](https://www.anaconda.com/products/individual). Clone or download the repository onto your PC. Using anaconda prompt, create and activate a new conda environment using `conda env create -n nlp_env` and `conda activate nlp_env`. Install the required packages into this environment, by navigating to the project folder and running `pip install -r requirements.txt`. You should now be able to execute all python scripts in this folder.
